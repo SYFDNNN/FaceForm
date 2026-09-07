@@ -30,9 +30,9 @@ def client():
         {"Heart": 0.01, "Oblong": 0.03, "Oval": 0.872, "Round": 0.04, "Square": 0.03},
     )
 
-    with patch("app.get_model", return_value=mock_model), \
-         patch("app._model", mock_model):
+    with patch("app.get_model", return_value=mock_model), patch("app._model", mock_model):
         from app import app
+
         app.config["TESTING"] = True
         with app.test_client() as client:
             yield client

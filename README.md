@@ -5,7 +5,7 @@ AI-powered face shape classification and style recommendation service. The appli
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
 ![PyTorch](https://img.shields.io/badge/PyTorch-2.x-EE4C2C?logo=pytorch&logoColor=white)
 ![Flask](https://img.shields.io/badge/Flask-API-000000?logo=flask&logoColor=white)
-![CI](https://github.com/SYFDNNN/FaceShape/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/SYFDNNN/FaceForm/actions/workflows/ci.yml/badge.svg)
 
 ## Highlights
 
@@ -42,8 +42,8 @@ Large datasets, model weights, databases, uploads, and secrets are intentionally
 ## Quick start
 
 ```bash
-git clone https://github.com/SYFDNNN/FaceShape.git
-cd FaceShape
+git clone https://github.com/SYFDNNN/FaceForm.git
+cd FaceForm
 python -m venv .venv
 .venv\Scripts\activate       # Windows
 # source .venv/bin/activate   # Linux/macOS

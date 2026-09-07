@@ -29,7 +29,7 @@ RUN pip install --upgrade pip && \
 FROM python:3.11-slim AS runtime
 
 LABEL maintainer="you@example.com"
-LABEL description="Face Shape Classifier — production Flask service"
+LABEL description="FaceForm — production Flask service"
 
 # Non-root user for security
 RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser

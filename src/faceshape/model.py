@@ -31,11 +31,13 @@ _MEAN = [0.485, 0.456, 0.406]
 _STD = [0.229, 0.224, 0.225]
 
 # Preprocessing pipeline — must match training val_transform exactly
-INFERENCE_TRANSFORM = transforms.Compose([
-    transforms.Resize((IMG_SIZE, IMG_SIZE)),
-    transforms.ToTensor(),
-    transforms.Normalize(mean=_MEAN, std=_STD),
-])
+INFERENCE_TRANSFORM = transforms.Compose(
+    [
+        transforms.Resize((IMG_SIZE, IMG_SIZE)),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=_MEAN, std=_STD),
+    ]
+)
 
 
 # ─── Model Builder ────────────────────────────────────────────────────────────
@@ -155,7 +157,7 @@ class FaceShapeModel:
 
         with self._lock:  # thread-safe: one inference at a time per model instance
             with torch.no_grad():
-                logits = self._model(tensor)          # [1, NUM_CLASSES]
+                logits = self._model(tensor)  # [1, NUM_CLASSES]
                 probs = torch.softmax(logits, dim=1)  # [1, NUM_CLASSES]
 
         probs_list = probs.squeeze(0).cpu().tolist()  # [NUM_CLASSES]
@@ -198,5 +200,5 @@ def preprocess_image(img_bytes: bytes) -> torch.Tensor:
     if img.mode != "RGB":
         img = img.convert("RGB")
 
-    tensor = INFERENCE_TRANSFORM(img)   # [3, 224, 224]
-    return tensor.unsqueeze(0)          # [1, 3, 224, 224]
+    tensor = INFERENCE_TRANSFORM(img)  # [3, 224, 224]
+    return tensor.unsqueeze(0)  # [1, 3, 224, 224]

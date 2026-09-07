@@ -11,7 +11,7 @@ import pytest
 import torch
 from PIL import Image
 
-from src.faceshape.model import CLASSES, NUM_CLASSES, preprocess_image, build_model
+from src.faceshape.model import CLASSES, NUM_CLASSES, build_model, preprocess_image
 
 
 # ─── preprocess_image ─────────────────────────────────────────────────────────
@@ -72,6 +72,7 @@ class TestPreprocessImage:
 class TestBuildModel:
     def test_output_classes(self):
         import torch.nn as nn
+
         model = build_model(num_classes=5)
         assert isinstance(model.classifier[1], nn.Linear)
         assert model.classifier[1].out_features == 5

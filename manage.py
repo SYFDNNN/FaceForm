@@ -30,6 +30,7 @@ def cmd_check_model(args):
 
     try:
         from src.faceshape.model import FaceShapeModel
+
         model = FaceShapeModel(model_path)
         logger.info("✅ Model loaded successfully on device: %s", model.device)
     except FileNotFoundError as exc:
@@ -47,6 +48,7 @@ def cmd_test_inference(args):
     try:
         import numpy as np
         from PIL import Image
+
         from src.faceshape.model import FaceShapeModel, preprocess_image
     except ImportError as exc:
         logger.error("Missing dependency: %s", exc)
@@ -99,6 +101,7 @@ def cmd_serve(args):
     os.environ.setdefault("FLASK_ENV", "development")
     os.environ.setdefault("MODEL_PATH", "models/face_shape_model.pth")
     from app import app
+
     app.run(host="0.0.0.0", port=int(args.port), debug=True)
 
 
@@ -107,15 +110,18 @@ def cmd_reload_model(args):
     Signal a running server to reload its model.
     Requires the server to be accessible at --url.
     """
-    import urllib.request
     import urllib.error
+    import urllib.request
 
     url = f"{args.url.rstrip('/')}/api/health"
     try:
         req = urllib.request.urlopen(url, timeout=5)
         import json
+
         data = json.loads(req.read())
-        logger.info("Server status: %s | model_loaded: %s", data.get("status"), data.get("model_loaded"))
+        logger.info(
+            "Server status: %s | model_loaded: %s", data.get("status"), data.get("model_loaded")
+        )
     except urllib.error.URLError as exc:
         logger.error("Cannot reach server at %s: %s", url, exc)
         sys.exit(1)

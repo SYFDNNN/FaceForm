@@ -1,4 +1,4 @@
-name: CI/CD — Face Shape Classifier
+name: CI/CD — FaceForm
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}/face-shape-classifier
+  IMAGE_NAME: ${{ github.repository }}/faceform
 
 jobs:
   # ── Lint & Format ────────────────────────────────────────────────────────────

@@ -24,6 +24,9 @@ env/
 model/
 models/*.pth
 
+# Training datasets — keep raw image collections out of Git history
+FaceShape Dataset/
+
 # Local data and runtime artifacts
 data/raw/
 runtime/

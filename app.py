@@ -3,19 +3,19 @@ Face Shape Classifier — Flask REST API
 Production-ready with auth, rate limiting, logging, and metrics.
 """
 
-import time
 import logging
 import os
+import time
 import uuid
 from functools import wraps
 from threading import Lock
 
-from flask import Flask, request, jsonify, render_template, g
+from flask import Flask, g, jsonify, render_template, request
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from werkzeug.utils import secure_filename
 
-from src.faceshape.model import FaceShapeModel, preprocess_image, CLASSES
+from src.faceshape.model import CLASSES, FaceShapeModel, preprocess_image
 from src.faceshape.recommendations import get_recommendations
 
 # ─── Logging Setup ────────────────────────────────────────────────────────────
@@ -81,6 +81,7 @@ with app.app_context():
 # ─── Auth Decorator ───────────────────────────────────────────────────────────
 def require_api_key(f):
     """Validate X-API-KEY header for protected endpoints."""
+
     @wraps(f)
     def decorated(*args, **kwargs):
         key = request.headers.get("X-API-KEY", "")
@@ -88,6 +89,7 @@ def require_api_key(f):
             logger.warning("Unauthorized request from %s", request.remote_addr)
             return jsonify({"status": "error", "message": "Invalid or missing API key"}), 401
         return f(*args, **kwargs)
+
     return decorated
 
 
@@ -135,23 +137,27 @@ def health():
     except Exception:
         pass
 
-    return jsonify({
-        "status": "ok",
-        "model_loaded": model_loaded,
-        "uptime_seconds": round(time.time() - _app_start_time, 1),
-        "device": str(_model.device) if _model else "unknown",
-        "version": "1.0.0",
-    })
+    return jsonify(
+        {
+            "status": "ok",
+            "model_loaded": model_loaded,
+            "uptime_seconds": round(time.time() - _app_start_time, 1),
+            "device": str(_model.device) if _model else "unknown",
+            "version": "1.0.0",
+        }
+    )
 
 
 @app.route("/api/classes", methods=["GET"])
 def classes():
     """Return list of supported face shape classes — public endpoint."""
-    return jsonify({
-        "status": "ok",
-        "classes": CLASSES,
-        "count": len(CLASSES),
-    })
+    return jsonify(
+        {
+            "status": "ok",
+            "classes": CLASSES,
+            "count": len(CLASSES),
+        }
+    )
 
 
 @app.route("/api/metrics", methods=["GET"])
@@ -190,10 +196,15 @@ def predict():
     # ── Validate gender ───────────────────────────────────────────────────────
     gender = request.form.get("gender", "").strip().lower()
     if gender not in ("male", "female"):
-        return jsonify({
-            "status": "error",
-            "message": "Gender is required. Must be 'male' or 'female'.",
-        }), 400
+        return (
+            jsonify(
+                {
+                    "status": "error",
+                    "message": "Gender is required. Must be 'male' or 'female'.",
+                }
+            ),
+            400,
+        )
 
     # ── Validate file presence ────────────────────────────────────────────────
     if "image" not in request.files:
@@ -204,10 +215,15 @@ def predict():
         return jsonify({"status": "error", "message": "Empty filename"}), 400
 
     if not allowed_file(file.filename):
-        return jsonify({
-            "status": "error",
-            "message": f"Invalid file type. Allowed: {', '.join(ALLOWED_EXTENSIONS)}",
-        }), 415
+        return (
+            jsonify(
+                {
+                    "status": "error",
+                    "message": f"Invalid file type. Allowed: {', '.join(ALLOWED_EXTENSIONS)}",
+                }
+            ),
+            415,
+        )
 
     # ── Read & preprocess ─────────────────────────────────────────────────────
     try:
@@ -218,7 +234,15 @@ def predict():
         tensor = preprocess_image(img_bytes)
     except Exception as exc:
         logger.error("Preprocessing error: %s", exc)
-        return jsonify({"status": "error", "message": "Failed to process image. Ensure it is a valid image."}), 422
+        return (
+            jsonify(
+                {
+                    "status": "error",
+                    "message": "Failed to process image. Ensure it is a valid image.",
+                }
+            ),
+            422,
+        )
 
     # ── Inference ─────────────────────────────────────────────────────────────
     try:
@@ -255,16 +279,18 @@ def predict():
         processing_time_ms,
     )
 
-    return jsonify({
-        "status": "ok",
-        "gender": gender,
-        "prediction": prediction,
-        "confidence": round(float(confidence), 4),
-        "probs": {cls: round(float(p), 4) for cls, p in probs.items()},
-        "recommendations": recommendations,
-        "processing_time_ms": processing_time_ms,
-        "request_id": g.request_id,
-    })
+    return jsonify(
+        {
+            "status": "ok",
+            "gender": gender,
+            "prediction": prediction,
+            "confidence": round(float(confidence), 4),
+            "probs": {cls: round(float(p), 4) for cls, p in probs.items()},
+            "recommendations": recommendations,
+            "processing_time_ms": processing_time_ms,
+            "request_id": g.request_id,
+        }
+    )
 
 
 # ─── Error Handlers ───────────────────────────────────────────────────────────
