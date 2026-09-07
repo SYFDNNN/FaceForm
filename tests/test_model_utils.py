@@ -11,7 +11,7 @@ import pytest
 import torch
 from PIL import Image
 
-from model_utils import CLASSES, NUM_CLASSES, preprocess_image, build_model
+from src.faceshape.model import CLASSES, NUM_CLASSES, preprocess_image, build_model
 
 
 # ─── preprocess_image ─────────────────────────────────────────────────────────

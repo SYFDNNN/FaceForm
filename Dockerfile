@@ -41,7 +41,8 @@ COPY --from=builder /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Copy application source
-COPY app.py model_utils.py manage.py gunicorn.conf.py ./
+COPY app.py manage.py gunicorn.conf.py ./
+COPY src/ ./src/
 COPY templates/ ./templates/
 COPY static/ ./static/
 
@@ -57,7 +58,7 @@ USER appuser
 
 # ── Environment defaults (override in docker-compose.yml) ────────────────────
 ENV FLASK_ENV=production \
-    MODEL_PATH=/app/face_shape_model.pth \
+    MODEL_PATH=/app/model/face_shape_model.pth \
     PORT=5000 \
     WORKERS=4 \
     THREADS=2 \

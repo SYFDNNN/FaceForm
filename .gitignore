@@ -18,17 +18,22 @@ env/
 .env
 *.env
 
-# Model weights — often large, use DVC or direct hosting
+# Model weights — keep large binaries out of Git history
 *.pth
 *.pt
 model/
+models/*.pth
+
+# Local data and runtime artifacts
+data/raw/
+runtime/
+uploads/
+*.db
+logs/
+*.log
 
 # Docker
 .dockerignore
-
-# Logs
-logs/
-*.log
 
 # Test artifacts
 .pytest_cache/

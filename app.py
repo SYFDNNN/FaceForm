@@ -15,8 +15,8 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from werkzeug.utils import secure_filename
 
-from model_utils import FaceShapeModel, preprocess_image, CLASSES
-from recommendations import get_recommendations
+from src.faceshape.model import FaceShapeModel, preprocess_image, CLASSES
+from src.faceshape.recommendations import get_recommendations
 
 # ─── Logging Setup ────────────────────────────────────────────────────────────
 logging.basicConfig(
@@ -31,7 +31,7 @@ app = Flask(__name__)
 
 # Config from environment variables (set in docker-compose or .env)
 app.config["MAX_CONTENT_LENGTH"] = int(os.getenv("MAX_CONTENT_LENGTH", 8 * 1024 * 1024))  # 8MB
-app.config["MODEL_PATH"] = os.getenv("MODEL_PATH", "face_shape_model.pth")
+app.config["MODEL_PATH"] = os.getenv("MODEL_PATH", "models/face_shape_model.pth")
 app.config["FLASK_ENV"] = os.getenv("FLASK_ENV", "production")
 
 # API key list: comma-separated in env var API_KEY_LIST

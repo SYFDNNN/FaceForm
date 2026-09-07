@@ -25,11 +25,11 @@ logger = logging.getLogger("manage")
 # ─── Commands ─────────────────────────────────────────────────────────────────
 def cmd_check_model(args):
     """Validate model file exists and can be loaded."""
-    model_path = args.model_path or os.getenv("MODEL_PATH", "face_shape_model.pth")
+    model_path = args.model_path or os.getenv("MODEL_PATH", "models/face_shape_model.pth")
     logger.info("Checking model: %s", model_path)
 
     try:
-        from model_utils import FaceShapeModel
+        from src.faceshape.model import FaceShapeModel
         model = FaceShapeModel(model_path)
         logger.info("✅ Model loaded successfully on device: %s", model.device)
     except FileNotFoundError as exc:
@@ -42,12 +42,12 @@ def cmd_check_model(args):
 
 def cmd_test_inference(args):
     """Run a test inference using a synthetic or supplied image."""
-    model_path = args.model_path or os.getenv("MODEL_PATH", "face_shape_model.pth")
+    model_path = args.model_path or os.getenv("MODEL_PATH", "models/face_shape_model.pth")
 
     try:
         import numpy as np
         from PIL import Image
-        from model_utils import FaceShapeModel, preprocess_image
+        from src.faceshape.model import FaceShapeModel, preprocess_image
     except ImportError as exc:
         logger.error("Missing dependency: %s", exc)
         sys.exit(1)
@@ -97,7 +97,7 @@ def cmd_create_api_key(args):
 def cmd_serve(args):
     """Start the development Flask server."""
     os.environ.setdefault("FLASK_ENV", "development")
-    os.environ.setdefault("MODEL_PATH", "face_shape_model.pth")
+    os.environ.setdefault("MODEL_PATH", "models/face_shape_model.pth")
     from app import app
     app.run(host="0.0.0.0", port=int(args.port), debug=True)
 

@@ -21,7 +21,7 @@
 
   --txt:          #e8edf2;
   --txt-2:        #8899aa;
-  --txt-3:        #556677;
+  --txt-3:        #71869a;
 
   --radius:       16px;
   --radius-sm:    10px;
@@ -685,6 +685,7 @@ body {
   border-radius: var(--radius);
   backdrop-filter: blur(8px);
 }
+.api-key-bar[hidden] { display: none !important; }
 .api-key-label {
   display: flex;
   align-items: center;
@@ -721,15 +722,22 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  height: 100%;
+  height: fit-content;
+  position: sticky;
+  top: 92px;
+  align-self: start;
+}
+@media (max-width: 960px) {
+  .upload-panel { position: static; }
 }
 
 .dropzone {
   background: var(--bg-card);
   border: 2px dashed var(--border);
   border-radius: var(--radius);
-  min-height: 280px;
-  flex: 1;
+  min-height: 360px;
+  height: 360px;
+  flex: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -769,7 +777,7 @@ body {
 }
 .dropzone-title { font-size: 16px; font-weight: 600; color: var(--txt); }
 .dropzone-sub { font-size: 14px; color: var(--txt-2); }
-.dropzone-types { font-size: 12px; color: var(--txt-3); margin-top: 4px; }
+.dropzone-types { font-size: 12px; color: var(--txt-2); margin-top: 4px; }
 
 .dropzone-preview {
   width: 100%;
@@ -833,20 +841,22 @@ body {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   min-height: 300px;
-  height: 100%;
+  height: auto;
+  align-self: start;
   overflow-y: auto;
   overflow-x: hidden;
   transition: var(--transition);
 }
 
 .results-empty {
-  height: 300px;
+  min-height: 300px;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 14px;
-  color: var(--txt-3);
+  color: var(--txt-2);
   font-size: 14px;
 }
 .results-empty-icon {
@@ -930,7 +940,7 @@ body {
   display: flex;
   justify-content: space-between;
   font-size: 11px;
-  color: var(--txt-3);
+  color: var(--txt-2);
   font-family: var(--font-mono);
   padding-top: 14px;
   border-top: 1px solid var(--border);
