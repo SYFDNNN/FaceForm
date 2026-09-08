@@ -89,7 +89,10 @@ class TestPredict:
     def test_predict_no_api_key_returns_401(self, client, valid_image_bytes):
         resp = client.post(
             "/api/predict",
-            data={"image": (io.BytesIO(valid_image_bytes), "face.jpg")},
+            data={
+                "gender": "male",
+                "image": (io.BytesIO(valid_image_bytes), "face.jpg"),
+            },
             content_type="multipart/form-data",
         )
         assert resp.status_code == 401
@@ -98,7 +101,10 @@ class TestPredict:
         resp = client.post(
             "/api/predict",
             headers={"X-API-KEY": "wrong-key"},
-            data={"image": (io.BytesIO(valid_image_bytes), "face.jpg")},
+            data={
+                "gender": "male",
+                "image": (io.BytesIO(valid_image_bytes), "face.jpg"),
+            },
             content_type="multipart/form-data",
         )
         assert resp.status_code == 401
@@ -114,7 +120,10 @@ class TestPredict:
             resp = client.post(
                 "/api/predict",
                 headers={"X-API-KEY": "test-api-key"},
-                data={"image": (io.BytesIO(valid_image_bytes), "face.jpg")},
+                data={
+                    "gender": "male",
+                    "image": (io.BytesIO(valid_image_bytes), "face.jpg"),
+                },
                 content_type="multipart/form-data",
             )
         assert resp.status_code == 200
@@ -130,11 +139,15 @@ class TestPredict:
             resp = client.post(
                 "/api/predict",
                 headers={"X-API-KEY": "test-api-key"},
-                data={"image": (io.BytesIO(valid_image_bytes), "face.jpg")},
+                data={
+                    "gender": "male",
+                    "image": (io.BytesIO(valid_image_bytes), "face.jpg"),
+                },
                 content_type="multipart/form-data",
             )
         data = resp.get_json()
         assert data["status"] == "ok"
+        assert data["gender"] == "male"
         assert data["prediction"] == "Oval"
         assert 0 <= data["confidence"] <= 1
         assert "probs" in data
@@ -152,7 +165,10 @@ class TestPredict:
             resp = client.post(
                 "/api/predict",
                 headers={"X-API-KEY": "test-api-key"},
-                data={"image": (io.BytesIO(valid_png_bytes), "face.png")},
+                data={
+                    "gender": "female",
+                    "image": (io.BytesIO(valid_png_bytes), "face.png"),
+                },
                 content_type="multipart/form-data",
             )
         assert resp.status_code == 200
@@ -161,6 +177,7 @@ class TestPredict:
         resp = client.post(
             "/api/predict",
             headers={"X-API-KEY": "test-api-key"},
+            data={"gender": "male"},
             content_type="multipart/form-data",
         )
         assert resp.status_code == 400
@@ -170,7 +187,10 @@ class TestPredict:
         resp = client.post(
             "/api/predict",
             headers={"X-API-KEY": "test-api-key"},
-            data={"image": (io.BytesIO(b"fake"), "document.pdf")},
+            data={
+                "gender": "male",
+                "image": (io.BytesIO(b"fake"), "document.pdf"),
+            },
             content_type="multipart/form-data",
         )
         assert resp.status_code == 415
@@ -179,10 +199,36 @@ class TestPredict:
         resp = client.post(
             "/api/predict",
             headers={"X-API-KEY": "test-api-key"},
-            data={"image": (io.BytesIO(b""), "face.jpg")},
+            data={
+                "gender": "male",
+                "image": (io.BytesIO(b""), "face.jpg"),
+            },
             content_type="multipart/form-data",
         )
         assert resp.status_code == 400
+
+    def test_predict_missing_gender_returns_400(self, client, valid_image_bytes):
+        resp = client.post(
+            "/api/predict",
+            headers={"X-API-KEY": "test-api-key"},
+            data={"image": (io.BytesIO(valid_image_bytes), "face.jpg")},
+            content_type="multipart/form-data",
+        )
+        assert resp.status_code == 400
+        assert "Gender is required" in resp.get_json()["message"]
+
+    def test_predict_invalid_gender_returns_400(self, client, valid_image_bytes):
+        resp = client.post(
+            "/api/predict",
+            headers={"X-API-KEY": "test-api-key"},
+            data={
+                "gender": "invalid",
+                "image": (io.BytesIO(valid_image_bytes), "face.jpg"),
+            },
+            content_type="multipart/form-data",
+        )
+        assert resp.status_code == 400
+        assert "Gender is required" in resp.get_json()["message"]
 
 
 # ─── Error Handlers ───────────────────────────────────────────────────────────
