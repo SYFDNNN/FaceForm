@@ -55,7 +55,10 @@ RECOMMENDATIONS = {
                 {"name": "Short Boxed Beard", "desc": "Creates jaw definition"},
             ],
             "specific_label": "Beard Style",
-            "tip": "Focus on adding width around your jaw and chin. Avoid styles that add volume to the top of your head.",
+            "tip": (
+                "Focus on adding width around your jaw and chin. Avoid styles that add volume "
+                "to the top of your head."
+            ),
         },
         "Oblong": {
             "hairstyle": [
@@ -99,7 +102,10 @@ RECOMMENDATIONS = {
                 {"name": "Full Sides Trim", "desc": "Full on sides, trim chin"},
             ],
             "specific_label": "Beard Style",
-            "tip": "Avoid tall hairstyles that add height. Go for styles with width on the sides to balance proportions.",
+            "tip": (
+                "Avoid tall hairstyles that add height. Go for styles with width on the sides "
+                "to balance proportions."
+            ),
         },
         "Oval": {
             "hairstyle": [
@@ -135,7 +141,10 @@ RECOMMENDATIONS = {
                 {"name": "Clean Shaven", "desc": "Sharp and polished"},
             ],
             "specific_label": "Beard Style",
-            "tip": "Oval is the most versatile face shape — most hairstyles and beard styles will suit you well.",
+            "tip": (
+                "Oval is the most versatile face shape — most hairstyles and beard styles will "
+                "suit you well."
+            ),
         },
         "Round": {
             "hairstyle": [
@@ -183,7 +192,9 @@ RECOMMENDATIONS = {
                 {"name": "Van Dyke", "desc": "Adds chin length"},
             ],
             "specific_label": "Beard Style",
-            "tip": "Avoid round or bowl cuts. Go for angular styles that add height and definition.",
+            "tip": (
+                "Avoid round or bowl cuts. Go for angular styles that add height and definition."
+            ),
         },
         "Square": {
             "hairstyle": [
@@ -227,7 +238,10 @@ RECOMMENDATIONS = {
                 {"name": "Fade Beard", "desc": "Gradual fade on sides"},
             ],
             "specific_label": "Beard Style",
-            "tip": "Your strong jawline is an asset. Soften it with textured or wavy styles rather than harsh cuts.",
+            "tip": (
+                "Your strong jawline is an asset. Soften it with textured or wavy styles rather "
+                "than harsh cuts."
+            ),
         },
     },
     "female": {
@@ -269,7 +283,10 @@ RECOMMENDATIONS = {
                 {"name": "Bold Lip Color", "desc": "Draw attention downward"},
             ],
             "specific_label": "Makeup Tips",
-            "tip": "Draw attention to your cheekbones. Styles that add volume near the chin balance your heart shape.",
+            "tip": (
+                "Draw attention to your cheekbones. Styles that add volume near the chin balance "
+                "your heart shape."
+            ),
         },
         "Oblong": {
             "hairstyle": [
@@ -309,7 +326,10 @@ RECOMMENDATIONS = {
                 {"name": "Horizontal Liner", "desc": "Widens the eye area"},
             ],
             "specific_label": "Makeup Tips",
-            "tip": "Horizontal lines are your best friend. Styles that add width will beautifully balance your face.",
+            "tip": (
+                "Horizontal lines are your best friend. Styles that add width will beautifully "
+                "balance your face."
+            ),
         },
         "Oval": {
             "hairstyle": [
@@ -349,7 +369,10 @@ RECOMMENDATIONS = {
                 {"name": "Experiment Freely", "desc": "Most looks will suit you"},
             ],
             "specific_label": "Makeup Tips",
-            "tip": "You have the most balanced face shape. Embrace your versatility and experiment boldly.",
+            "tip": (
+                "You have the most balanced face shape. Embrace your versatility and experiment "
+                "boldly."
+            ),
         },
         "Round": {
             "hairstyle": [
@@ -393,7 +416,10 @@ RECOMMENDATIONS = {
                 {"name": "Bold Brows", "desc": "Draw the eye upward"},
             ],
             "specific_label": "Makeup Tips",
-            "tip": "Create length with vertical lines. High hairstyles and angled makeup beautifully elongate your face.",
+            "tip": (
+                "Create length with vertical lines. High hairstyles and angled makeup beautifully "
+                "elongate your face."
+            ),
         },
         "Square": {
             "hairstyle": [
@@ -433,7 +459,10 @@ RECOMMENDATIONS = {
                 {"name": "Contour Corners", "desc": "Soften the forehead"},
             ],
             "specific_label": "Makeup Tips",
-            "tip": "Soft, romantic hairstyles and circular makeup techniques beautifully balance your angular structure.",
+            "tip": (
+                "Soft, romantic hairstyles and circular makeup techniques beautifully balance "
+                "your angular structure."
+            ),
         },
     },
 }

@@ -13,7 +13,6 @@ from threading import Lock
 from flask import Flask, g, jsonify, render_template, request
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-from werkzeug.utils import secure_filename
 
 from src.faceshape.model import CLASSES, FaceShapeModel, preprocess_image
 from src.faceshape.recommendations import get_recommendations
@@ -189,8 +188,6 @@ def predict():
     Body: multipart/form-data — fields: 'image' (file), 'gender' (male|female)
     Returns: JSON with prediction, confidence, probabilities, and recommendations.
     """
-    global _request_count
-
     t_start = time.time()
 
     # ── Validate gender ───────────────────────────────────────────────────────

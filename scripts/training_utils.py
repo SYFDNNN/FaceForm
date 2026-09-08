@@ -20,8 +20,8 @@ from PIL import Image
 from torchvision import models, transforms
 
 matplotlib.use("Agg")  # headless — no display needed
-import matplotlib.cm as cm
-import matplotlib.pyplot as plt
+import matplotlib.cm as cm  # noqa: E402
+import matplotlib.pyplot as plt  # noqa: E402
 
 # ─────────────────────────────────────────────────────────────────────────────
 CLASS_NAMES: List[str] = ["Heart", "Oblong", "Oval", "Round", "Square"]

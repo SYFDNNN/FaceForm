@@ -12,7 +12,6 @@ import io
 import logging
 import threading
 from pathlib import Path
-from typing import Optional
 
 import torch
 import torch.nn as nn
